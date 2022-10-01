@@ -1,4 +1,3 @@
-import Login from '../entities/Login';
 import User from '../database/models/user';
 import ServerError from '../helpers/NewError';
 import { token } from '../helpers/token';
