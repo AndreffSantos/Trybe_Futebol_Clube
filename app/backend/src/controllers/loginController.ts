@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import LoginService from '../services/loginService';
 
 export default class LoginController {
@@ -7,9 +7,9 @@ export default class LoginController {
   async login(req: Request, res: Response): Promise<Response> {
     try {
       const token = await this.service.login(req.body);
-      return res.status(200).json({ token });  
+      return res.status(200).json({ token });
     } catch (error: any) {
-      return res.status(error.statusCode).json({ error: error.error });
+      return res.status(error.statusCode).json({ message: error.message });
     }
   }
 
@@ -17,8 +17,8 @@ export default class LoginController {
     try {
       const role = await this.service.validate(req.headers);
       return res.status(200).json({ role });
-    } catch (error) {
-      return res.status(200).json({ error: error });
+    } catch (error: any) {
+      return res.status(error.statusCode).json({ message: error.message });
     }
   }
 }

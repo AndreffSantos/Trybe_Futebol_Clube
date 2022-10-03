@@ -16,7 +16,7 @@ export default class LoginService {
       },
     });
     if (!user || !hash.validate(data.password, user.password)) {
-      throw new ServerError(400, 'Email ou senha incorretos.');
+      throw new ServerError(401, 'Incorrect email or password');
     }
     const newToken = token.create({
       id: user.id,
