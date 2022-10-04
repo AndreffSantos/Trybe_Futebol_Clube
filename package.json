@@ -15,7 +15,8 @@
     "compose:up:dev": "(cd app && docker compose -f docker-compose.dev.yml up -d --build)",
     "compose:down:dev": "(cd app && docker compose -f docker-compose.dev.yml down --remove-orphans)",
     "logs": "cd app && docker compose logs -f",
-    "mocha": "(cd app/backend && npm run test)"
+    "mocha": "(cd app/backend && npm run test)",
+    "lint": "(cd app/backend && npm run lint)"
   },
   "author": "Trybe",
   "devDependencies": {
