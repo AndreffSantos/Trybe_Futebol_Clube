@@ -9,6 +9,13 @@ class Match extends Model {
   awayTeam!: number;
   awayTeamGoal!: number;
   inProgress!: number;
+
+  static associate() {
+    Match.belongsTo(Team, {
+      foreignKey: 'id',
+      as: 'team_id',
+    });    
+  }
 }
 
 Match.init({
@@ -30,11 +37,6 @@ Match.init({
   tableName: 'matches',
   timestamps: false,
   underscored: true,
-});
-
-Match.belongsTo(Team, {
-  foreignKey: 'id',
-  as: 'team_id',
 });
 
 export default Match;

@@ -5,7 +5,14 @@ import Match from './matches';
 
 class Team extends Model {
   id!: number;
-  teamName!: string; 
+  teamName!: string;
+
+  static associate() {
+    Team.hasMany(Match, {
+      foreignKey: 'id',
+      as: 'team_id',
+    });    
+  }
 }
 
 Team.init({
@@ -21,11 +28,6 @@ Team.init({
   tableName: 'teams',
   timestamps: false,
   underscored: true,
-});
-
-Team.hasMany(Match, {
-  foreignKey: 'id',
-  as: 'team_id',
 });
 
 export default Team;
