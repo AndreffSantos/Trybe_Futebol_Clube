@@ -8,4 +8,13 @@ export default class TeamService {
     const teams = await this.model.findAll();
     return teams;
   }
+
+  async getById(data: Record<string, any>) {
+    const user = await this.model.findOne({
+      where: {
+        id: data.id,
+      },
+    });
+    return user;
+  }
 }
