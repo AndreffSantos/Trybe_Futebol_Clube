@@ -11,4 +11,8 @@ route.get('/', (req, res) => {
   controller.getAll(req, res);
 });
 
+route.get('/:id', (req, res) => {
+  controller.getById(req, res);
+});
+
 export default route;
