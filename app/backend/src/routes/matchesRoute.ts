@@ -8,7 +8,7 @@ const controller = new MatchesController(new MatchesService(Match));
 const route = Router();
 
 route.get('/', (req, res) => {
-  controller.getAll(req, res);
+  controller.getMatches(req, res);
 });
 
 export default route;
