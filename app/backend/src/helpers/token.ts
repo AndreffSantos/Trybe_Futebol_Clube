@@ -18,7 +18,7 @@ class Token {
     try {
       return verify(token, JWT_SECRET) as Payload;
     } catch (error) {
-      throw new ServerError(401, 'Unauthorized');
+      throw new ServerError(401, 'Token must be a valid token');
     }
   }
 }
