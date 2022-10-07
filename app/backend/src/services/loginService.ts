@@ -27,8 +27,7 @@ export default class LoginService {
     return newToken;
   }
 
-  async validate(data: Record<string, any>): Promise<string> {
-    const payload = token.validate(data.authorization);
-    return payload.role;
+  validate(data: Record<string, any>): string {
+    return validate.token(data.authorization);
   }
 }

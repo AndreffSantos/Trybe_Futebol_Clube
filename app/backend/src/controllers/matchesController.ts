@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import MatchesService from '../services/matchesService';
 
+
 export default class MatchesController {
   constructor(private service: MatchesService) {}
 
@@ -18,6 +19,15 @@ export default class MatchesController {
           const matches = await this.service.getAll();
           return res.status(200).json(matches);
       }
+    } catch (error: any) {
+      return res.status(error.statusCode).json({ message: error.message });
+    }
+  }
+
+  async createMatch(req: Request, res: Response): Promise<Response> {
+    try {
+      const newMatch = await this.service.createMatch(req.body, req.headers);
+      return res.status(201).json(newMatch);
     } catch (error: any) {
       return res.status(error.statusCode).json({ message: error.message });
     }
