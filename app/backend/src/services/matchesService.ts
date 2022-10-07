@@ -66,7 +66,6 @@ export default class MatchesService {
   }
 
   async finish(data: Record<string, any>) {
-    console.log(data);
     await this.model.update({
       inProgress: false,
     }, {
