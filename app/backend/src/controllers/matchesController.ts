@@ -32,4 +32,13 @@ export default class MatchesController {
       return res.status(error.statusCode).json({ message: error.message });
     }
   }
+
+  async finish(req: Request, res: Response): Promise<Response> {
+    try {
+      await this.service.finish(req.params);
+      return res.status(200).json({ message: "Finished" });
+    } catch (error: any) {
+      return res.status(error.statusCode).json({ message: error.message });
+    }
+  }
 }

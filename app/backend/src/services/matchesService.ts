@@ -64,4 +64,16 @@ export default class MatchesService {
     });
     return newMatch;
   }
+
+  async finish(data: Record<string, any>) {
+    console.log(data);
+    await this.model.update({
+      inProgress: false,
+    }, {
+      where: {
+        id: data.id,
+      },
+      fields: ['inProgress'],
+    });
+  }
 }

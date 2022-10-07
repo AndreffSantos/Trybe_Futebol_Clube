@@ -11,8 +11,12 @@ route.get('/', (req, res) => {
   controller.getMatches(req, res);
 });
 
-route.post('/',(req, res) => {
+route.post('/', (req, res) => {
   controller.createMatch(req, res);
+});
+
+route.patch('/:id/finish', (req, res) => {
+  controller.finish(req, res);
 });
 
 export default route;
