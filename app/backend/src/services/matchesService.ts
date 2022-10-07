@@ -60,7 +60,7 @@ export default class MatchesService {
       homeTeamGoals: data.homeTeamGoals,
       awayTeam: data.awayTeam,
       awayTeamGoals: data.awayTeamGoals,
-      inProgress: data.inProgress,
+      inProgress: true,
     });
     return newMatch;
   }
