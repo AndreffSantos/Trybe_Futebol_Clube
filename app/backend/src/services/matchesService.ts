@@ -79,12 +79,12 @@ export default class MatchesService {
   async update(params: Record<string, any>, body: Record<string, any>) {
     await this.model.update({
       homeTeamGoals: body.homeTeamGoals,
-      awayTeamGoald: body.awayTeamGoals,
+      awayTeamGoals: body.awayTeamGoals,
     }, {
       where: {
         id: params.id,
       },
-      fields: ['homeTeamGoals', 'awayTeamGoald'],
+      fields: ['homeTeamGoals', 'awayTeamGoals'],
     });
   }
 }
