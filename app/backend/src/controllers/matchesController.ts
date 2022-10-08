@@ -41,4 +41,13 @@ export default class MatchesController {
       return res.status(error.statusCode).json({ message: error.message });
     }
   }
+
+  async update( req: Request, res: Response): Promise<Response> {
+    try {
+      await this.service.update(req.params, req.body);
+      return res.status(200).json({ message: "Edited" })
+    } catch (error: any) {
+      return res.status(error.statusCode).json({ message: error.message });
+    }
+  }
 }

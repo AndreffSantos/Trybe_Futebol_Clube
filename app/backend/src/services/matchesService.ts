@@ -65,14 +65,26 @@ export default class MatchesService {
     return newMatch;
   }
 
-  async finish(data: Record<string, any>) {
+  async finish(params: Record<string, any>) {
     await this.model.update({
       inProgress: false,
     }, {
       where: {
-        id: data.id,
+        id: params.id,
       },
       fields: ['inProgress'],
+    });
+  }
+
+  async update(params: Record<string, any>, body: Record<string, any>) {
+    await this.model.update({
+      homeTeamGoals: body.homeTeamGoals,
+      awayTeamGoald: body.awayTeamGoals,
+    }, {
+      where: {
+        id: params.id,
+      },
+      fields: ['homeTeamGoals', 'awayTeamGoald'],
     });
   }
 }

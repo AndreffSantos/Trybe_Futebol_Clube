@@ -19,4 +19,8 @@ route.patch('/:id/finish', (req, res) => {
   controller.finish(req, res);
 });
 
+route.patch('/:id', (req, res) => {
+  controller.update(req, res);
+})
+
 export default route;
