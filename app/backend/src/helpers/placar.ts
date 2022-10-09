@@ -4,7 +4,7 @@ export default class Placar {
     private matches: Record<string, any>[],
   ) {}
   
-  public calculaPlacar(home: boolean = true, away: boolean = true) {
+  public calculaPlacar(home: boolean, away: boolean) {
     this.teams.forEach((team) => {
       team.totalPoints = 0;
       team.totalGames = 0;
@@ -66,9 +66,30 @@ export default class Placar {
       team.goalsBalance = team.goalsFavor - team.goalsOwn;
       team.efficiency = (team.totalPoints / (team.totalGames * 3) * 100).toFixed(2);
     });
-    return this.teams.map((team) => {
+    const result = this.teams.map((team) => {
       const { id, teamName, ...rest } = team;
-      return { name: teamName, ...rest };
+      return { name: teamName, ...rest } as Record<string, any>;
+    });
+
+    return result.sort((a,b) => {
+      if (a.totalPoints > b.totalPoints) return -1;
+      if (a.totalPoints < b.totalPoints) return 1;
+
+      if (a.totalPoints === b.totalPoints) {
+        if (a.goalsBalance > b.goalsBalance) return -1;
+        if (a.goalsBalance < b.goalsBalance) return 1;
+
+        if (a.goalsBalance === b.goalsBalance) {
+          if (a.goalsFavor > b.goalsFavor) return -1;
+          if (a.goalsFavor < b.goalsFavor) return 1;
+
+          if (a.goalsFavor === b.goalsFavor) {
+            if (a.goalsOwn > b.goalsOwn) return -1;
+            if (a.goalsOwn < b.goalsOwn) return 1;
+          }
+        }
+      }
+      return 0;
     });
   }
 }
