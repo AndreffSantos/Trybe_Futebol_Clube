@@ -27,9 +27,8 @@ export default class Placar {
             team.goalsFavor += match.homeTeamGoals;
             team.goalsOwn += match.awayTeamGoals;  
           } else if (awayTeam) {
-            team.totalPoints += 3;
             team.totalGames += 1;
-            team.totalVictories += 1;
+            team.totalLosses += 1;
             team.goalsFavor += match.awayTeamGoals;
             team.goalsOwn += match.homeTeamGoals;  
           }
@@ -54,10 +53,9 @@ export default class Placar {
             team.goalsFavor += match.homeTeamGoals;
             team.goalsOwn +=  match.awayTeamGoals;    
           } else if (awayTeam) {
+            team.totalPoints += 3;
             team.totalGames += 1;
-            team.totalLosses += 1;
-            team.goalsFavor += match.homeTeamGoals;
-            team.goalsOwn +=  match.awayTeamGoals;    
+            team.totalVictories += 1;
             team.goalsFavor += match.awayTeamGoals;
             team.goalsOwn += match.homeTeamGoals;  
           }

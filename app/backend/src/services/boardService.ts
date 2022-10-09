@@ -12,16 +12,16 @@ export default class Boardservice {
         inProgress: false,
       }
     })).map((e) => e.get());
-    
+    const placar = new Placar(teams, matches);
     switch (path) {
       case '/':
-        const results = new Placar(teams, matches).calculaPlacar(true, true);
+        const results = placar.calculaPlacar(true, true);
         return results;
       case '/home':
-        const home = new Placar(teams, matches).calculaPlacar(true, false);
+        const home = placar.calculaPlacar(true, false);
         return home;
       case '/away':
-        const away = new Placar(teams, matches).calculaPlacar(false, true);
+        const away = placar.calculaPlacar(false, true);
         return away
       default:
         break;
