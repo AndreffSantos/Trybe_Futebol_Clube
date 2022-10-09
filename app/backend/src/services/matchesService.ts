@@ -19,21 +19,28 @@ const INCLUDE = [
 export default class MatchesService {
   constructor(private model: typeof Match) {}
 
-  async getAll() {
-    const matches = await this.model.findAll({
-      include: INCLUDE,
-    });
-    return matches;
-  }
-
-  async getByProgress(inProgress: boolean) {
-    const matches = await this.model.findAll({
-      where: {
-        inProgress: inProgress,
-      },
-      include: INCLUDE,
-    });
-    return matches;
+  async getAllByProgress(query: Record<string, any>) {
+    const { inProgress } = query;
+    switch (inProgress) {
+      case 'true':
+        return await this.model.findAll({
+          where: {
+            inProgress: true,
+          },
+          include: INCLUDE,
+        });
+      case 'false':
+        return await this.model.findAll({
+          where: {
+            inProgress: false,
+          },
+          include: INCLUDE,
+        });
+      default:
+        return await this.model.findAll({
+          include: INCLUDE,
+        });
+    }
   }
 
   async createMatch(data: Record<string, any>, auth: Record<string, any>) {
