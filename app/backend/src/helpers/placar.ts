@@ -20,74 +20,69 @@ export default class Placar {
         const awayTeam = away ? (team.id === match.awayTeam) : false;
         const isHomeWin = match.homeTeamGoals - match.awayTeamGoals;
         if (isHomeWin > 0) {
-          if (homeTeam) {
-            team.totalPoints += 3;
-            team.totalGames += 1;
-            team.totalVictories += 1;
-            team.goalsFavor += match.homeTeamGoals;
-            team.goalsOwn += match.awayTeamGoals;  
-          } else if (awayTeam) {
-            team.totalGames += 1;
-            team.totalLosses += 1;
-            team.goalsFavor += match.awayTeamGoals;
-            team.goalsOwn += match.homeTeamGoals;  
-          }
+          if (homeTeam) this.vitoria(team, match);
+          else if (awayTeam) this.derrota(team, match);
         } else if (isHomeWin === 0) {
-          if (homeTeam) {
-            team.totalPoints += 1;
-            team.totalGames += 1;
-            team.totalDraws += 1;
-            team.goalsFavor += match.homeTeamGoals;
-            team.goalsOwn +=  match.awayTeamGoals;  
-          } else if (awayTeam) {
-            team.totalPoints += 1;
-            team.totalGames += 1;
-            team.totalDraws += 1;
-            team.goalsFavor += match.awayTeamGoals;
-            team.goalsOwn += match.homeTeamGoals;  
-          }
+          if (homeTeam) this.empate(team, match);
+          else if (awayTeam) this.empate(team, match);
         } else if(isHomeWin < 0) {
-          if (homeTeam) {
-            team.totalGames += 1;
-            team.totalLosses += 1;
-            team.goalsFavor += match.homeTeamGoals;
-            team.goalsOwn +=  match.awayTeamGoals;    
-          } else if (awayTeam) {
-            team.totalPoints += 3;
-            team.totalGames += 1;
-            team.totalVictories += 1;
-            team.goalsFavor += match.awayTeamGoals;
-            team.goalsOwn += match.homeTeamGoals;  
-          }
+          if (homeTeam) this.derrota(team, match);
+          else if (awayTeam) this.vitoria(team, match);
         }
       });
       team.goalsBalance = team.goalsFavor - team.goalsOwn;
       team.efficiency = (team.totalPoints / (team.totalGames * 3) * 100).toFixed(2);
     });
-    const result = this.teams.map((team) => {
+
+    const scoreboard = this.teams.map((team) => {
       const { id, teamName, ...rest } = team;
       return { name: teamName, ...rest } as Record<string, any>;
-    });
+    }).sort(this.compareFn);
 
-    return result.sort((a,b) => {
-      if (a.totalPoints > b.totalPoints) return -1;
-      if (a.totalPoints < b.totalPoints) return 1;
+    return scoreboard;
+  }
 
-      if (a.totalPoints === b.totalPoints) {
-        if (a.goalsBalance > b.goalsBalance) return -1;
-        if (a.goalsBalance < b.goalsBalance) return 1;
+  private vitoria(team: Record<string, any>, match: Record<string, any>): void {
+    team.totalPoints += 3;
+    team.totalGames += 1;
+    team.totalVictories += 1;
+    team.goalsFavor += match.homeTeamGoals;
+    team.goalsOwn += match.awayTeamGoals;  
+  }
 
-        if (a.goalsBalance === b.goalsBalance) {
-          if (a.goalsFavor > b.goalsFavor) return -1;
-          if (a.goalsFavor < b.goalsFavor) return 1;
+  private derrota(team: Record<string, any>, match: Record<string, any>) {
+    team.totalGames += 1;
+    team.totalLosses += 1;
+    team.goalsFavor += match.awayTeamGoals;
+    team.goalsOwn += match.homeTeamGoals;
+  }
 
-          if (a.goalsFavor === b.goalsFavor) {
-            if (a.goalsOwn > b.goalsOwn) return -1;
-            if (a.goalsOwn < b.goalsOwn) return 1;
-          }
+  private empate(team: Record<string, any>, match: Record<string, any>) {
+    team.totalPoints += 1;
+    team.totalGames += 1;
+    team.totalDraws += 1;
+    team.goalsFavor += match.homeTeamGoals;
+    team.goalsOwn +=  match.awayTeamGoals;  
+  }
+
+  private compareFn(a: Record<string, any>, b: Record<string, any>) {
+    if (a.totalPoints > b.totalPoints) return -1;
+    if (a.totalPoints < b.totalPoints) return 1;
+
+    if (a.totalPoints === b.totalPoints) {
+      if (a.goalsBalance > b.goalsBalance) return -1;
+      if (a.goalsBalance < b.goalsBalance) return 1;
+
+      if (a.goalsBalance === b.goalsBalance) {
+        if (a.goalsFavor > b.goalsFavor) return -1;
+        if (a.goalsFavor < b.goalsFavor) return 1;
+
+        if (a.goalsFavor === b.goalsFavor) {
+          if (a.goalsOwn > b.goalsOwn) return -1;
+          if (a.goalsOwn < b.goalsOwn) return 1;
         }
       }
-      return 0;
-    });
+    }
+    return 0;
   }
 }
